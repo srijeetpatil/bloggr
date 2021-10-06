@@ -10,23 +10,6 @@ var dotenv = require("dotenv");
 
 dotenv.config({ path: "./.env.local" });
 
-/* Cors options */
-var whitelist = [
-  "http://localhost:3001",
-  "https://reactmern.herokuapp.com",
-  "http://localhost:3000",
-];
-var corsOptions = {
-  origin: function (origin, callback) {    
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
 // Parsers externally added
 var multer = require("multer");
 var upload = multer();
@@ -40,7 +23,7 @@ var app = express();
 app.use(express.static(path.join(__dirname, "/views/build")));
 
 // Use CORS
-app.use(cors(corsOptions));
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
